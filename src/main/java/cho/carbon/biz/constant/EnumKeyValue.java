@@ -1,5 +1,16 @@
 package cho.carbon.biz.constant;
 public class EnumKeyValue {
+public static final Integer ENUM_可用状态_新增=2202;
+public static final Integer ENUM_可用状态_正常使用=2203;
+public static final Integer ENUM_可用状态_废弃=2204;
+public static final Integer ENUM_可用状态_有误=2205;
+public static final Integer ENUM_权限类型_功能访问权限=2206;
+public static final Integer ENUM_权限类型_数据访问权限=2207;
+public static final Integer ENUM_权限标签_系统管理权限=306;
+public static final Integer ENUM_权限标签_基础权限=307;
+public static final Integer ENUM_角色标签_基础角色=308;
+public static final Integer ENUM_角色标签_系统配置角色=309;
+public static final Integer ENUM_用户标签_系统用户=310;
 public static final Integer ENUM_事项类别_困难家庭=30666;
 public static final Integer ENUM_事项类别_老年人=30667;
 public static final Integer ENUM_事项类别_社保补贴=30668;
@@ -63,4 +74,5 @@ public static final Integer ENUM_等级_二级=30751;
 public static final Integer ENUM_等级_三级=30752;
 public static final Integer ENUM_等级_四级=30753;
 public static final Integer ENUM_等级_无=30754;
+public static final Integer ENUM_家庭信息错误_户主数量错误=30756;
 }

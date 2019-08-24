@@ -35,7 +35,6 @@ global cho.carbon.complexus.FGRecordComplexus recordComplexus;
 
 
 //下面识别身份证号错误信息
-
 rule "清空人口错误"
 	salience 7
 when
@@ -51,12 +50,8 @@ when
     eval(!IDIntrospection.inspectId((String)$IdFB.getValue(AttributeValueType.STRING)));
 then 
 	String code = CodeManager.newCode32();
-	FuseLeafAttribute leafAttr = FuseAttributeFactory
-	.buildFuseLeafAttribute($IdFB.getCode(), DXJDE2020Item.人口信息_人口错误, 
-	code, DXJDE2020Item.人口错误_错误类型, EnumKeyValue.ENUM_人口错误信息_身份证号错误);
-	
+	FuseLeafAttribute leafAttr = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2020Item.人口信息_人口错误, code, DXJDE2020Item.人口错误_错误类型, EnumKeyValue.ENUM_人口错误信息_身份证号错误);
 	addedLeafAttrList.add(leafAttr);
-	FuseLeafAttribute leafAttr2 = FuseAttributeFactory.buildFuseLeafAttribute($IdFB.getCode(), DXJDE2020Item.人口信息_人口错误, code, DXJDE2020Item.人口错误_描述, "身份证校验错误");
+	FuseLeafAttribute leafAttr2 = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2020Item.人口信息_人口错误, code, DXJDE2020Item.人口错误_描述, "身份证校验错误");
 	addedLeafAttrList.add(leafAttr2);
 end
-
