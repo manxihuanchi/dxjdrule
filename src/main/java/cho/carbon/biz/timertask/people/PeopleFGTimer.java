@@ -49,10 +49,8 @@ public class PeopleFGTimer extends PeopleFG {
 
 	@Override
 	public ImproveResult secondImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-//		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-//				SessionFactory.findScannerSession("ks-people-secondipm-secondipmTimer"));
-		
-		return null;
+		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-people-secondipm-secondipmTimer"));
 	}
 	
 }
