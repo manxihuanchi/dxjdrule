@@ -31,4 +31,25 @@
 	
 	<!-- people end-->
 	
+	<!-- family start-->
+	<kbase name="familyidtquery" packages="kie.family.identity.query">
+		<ksession name="ks-family-idt-query" />
+	</kbase>
+	<kbase name="familypreipm" packages="kie.family.preipm">
+		<ksession name="ks-family-preipm" />
+	</kbase>
+	<kbase name="familyipm" packages="kie.family.ipm, kie.family.ipm.ipmTimer">
+		<ksession name="ks-family-ipm" />
+	</kbase>
+	<kbase name="familypostimp" packages="kie.family.postimp">
+		<ksession name="ks-family-postimp" />
+	</kbase>
+	<kbase name="familysecondipm" packages="kie.family.secondipm">
+		<ksession name="ks-family-secondipm" />
+	</kbase>
+	<kbase name="familythirdIPM" packages="kie.family.thirdIPM">
+		<ksession name="ks-family-thirdIPM" />
+	</kbase>
+	<!-- family end-->
+	
 </kmodule>

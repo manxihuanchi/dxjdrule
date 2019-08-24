@@ -26,20 +26,20 @@ public class FamilyFG implements FuseCheck,FunctionalGroup, IdentityQuery,OneRou
 	@Override
 	public Collection<ModelCriterion> getCriterions(String recordCode, FGRecordComplexus recordComplexus) {
 		return KIEHelper.getBizCriteriaListFromKIE(recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-idt-query"));
+				SessionFactory.findScannerSession("ks-family-idt-query"));
 	}
 
 	@Override
 	public ImproveResult preImprove(FGFusionContext context, String recordCode, OpsComplexus opsComplexus,
 			FGRecordComplexus recordComplexus) {
 		return KIEHelper.getImproveResultFromKIE(context, recordCode, opsComplexus, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-preipm"));
+				SessionFactory.findScannerSession("ks-family-preipm"));
 	}
 
 	@Override
 	public ImproveResult improve(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
 		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-ipm"));
+				SessionFactory.findScannerSession("ks-family-ipm"));
 	} 
 
 	@Override
@@ -51,19 +51,19 @@ public class FamilyFG implements FuseCheck,FunctionalGroup, IdentityQuery,OneRou
 	@Override
 	public ImproveResult postImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
 		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-postimp"));
+				SessionFactory.findScannerSession("ks-family-postimp"));
 	}
 
 	@Override
 	public ImproveResult secondImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
 		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-secondipm"));
+				SessionFactory.findScannerSession("ks-family-secondipm"));
 	}
 
 	@Override
 	public ImproveResult thirdImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
 		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-thirdIPM"));
+				SessionFactory.findScannerSession("ks-family-thirdIPM"));
 	}
 
 	@Override

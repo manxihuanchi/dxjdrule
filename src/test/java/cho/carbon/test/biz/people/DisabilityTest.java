@@ -67,7 +67,7 @@ public class DisabilityTest {
 		entity.putValue("身份类别", "30703,30708");
 		
 		
-		
+		// 二维组， 多行属性
 	  LeafEntity sentity2 = new LeafEntity("残疾信息"); 
 	  sentity2.putValue("残疾类别",  EnumKeyValue.ENUM_残疾类别_听力); 
 	  sentity2.putValue("残疾等级",	  EnumKeyValue.ENUM_等级_一级); 

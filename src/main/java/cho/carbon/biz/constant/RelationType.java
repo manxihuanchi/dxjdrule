@@ -12,11 +12,9 @@ public static final String RR_人口信息_户主家庭_家庭信息="DXJDE2020R
 public static final String RR_人口信息_归属家庭_家庭信息="DXJDE2020R2045";
 public static final String RR_人口信息_申请事项_民生保障="DXJDE2020R2048";
 public static final String RR_人口信息_享受事项_民生保障="DXJDE2020R2050";
-public static final String RR_人口信息_111111444_家庭信息="DXJDE2020R2082";
-public static final String RR_人口信息_44444_人口信息="DXJDE2020R2084";
-public static final String RR_人口信息_5555555_人口信息="DXJDE2020R2085";
 public static final String RR_人口信息_夫妻_人口信息="DXJDE2020R2100";
+public static final String RR_人口信息_居住家庭_家庭信息="DXJDE2020R2130";
 public static final String RR_家庭信息_户主_人口信息="DXJDE2038R2044";
 public static final String RR_家庭信息_成员_人口信息="DXJDE2038R2046";
-public static final String RR_家庭信息_22222666_人口信息="DXJDE2038R2083";
+public static final String RR_家庭信息_居住成员_人口信息="DXJDE2038R2131";
 }

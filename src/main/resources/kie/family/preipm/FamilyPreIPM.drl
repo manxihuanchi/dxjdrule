@@ -1,18 +1,18 @@
 package com.abc.rule.family.ipm
 
-import com.abc.rrc.record.Attribute;
-import com.abc.rrc.factory.DBAttributeFactory;
-import com.zhsq.biz.constant.CommonAlgorithm;
-import com.zhsq.biz.constant.family.FamilyItem;
-import com.abc.fuse.improve.attribute.FuseAttribute;
-import com.abc.model.enun.ValueType;
-import com.zhsq.biz.constant.EnumKeyValue;
-import com.abc.fuse.improve.attribute.label.FuseLabelAttribute;
-import com.abc.fuse.improve.attribute.leaf.FuseLeafAttribute;
-import com.abc.fuse.improve.attribute.FuseLeafAttrFactory;
-import com.abc.util.CodeManager;
-import com.abc.relation.RecordRelation;
-import com.zhsq.biz.constant.people.PeopleItem;
+import cho.carbon.meta.enun.AttributeValueType;
+import cho.carbon.fuse.improve.attribute.FuseAttributeFactory;
+import cho.carbon.rrc.builder.FGRootRecordBuilder;
+import cho.carbon.fuse.improve.attribute.OpsAttribute;
+import cho.carbon.rrc.record.FGAttribute;
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.ops.builder.RecordRelationOpsBuilder;
+import cho.carbon.rrc.record.FGRootRecord;
+import cho.carbon.ops.builder.RecordRelationOpsBuilder;
+import cho.carbon.sysdate.SystemDateTimeManager;
+import cho.carbon.relation.RecordRelation;
+import cho.carbon.relation.RelationCorrelation;
+
 
 global java.lang.String hostCode; 
 global java.lang.String hostType;
@@ -21,12 +21,11 @@ global java.lang.String userCode;
 global java.lang.String recordCode;
 global java.lang.String recordName;
 
+global java.util.List recordRelationOpsBuilderNew;
+global java.util.List rootRecordList;
 global java.util.List attributeList;
-global java.util.List addedLabelList;
-global java.util.List removedLabelList;
-global java.util.List addedLabelList;
 global java.util.List addedLeafAttrList;
 global java.util.Map removedLeafAttrMap;
-global com.abc.rrc.record.RootRecord rootRecord;
-global  com.abc.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
-global com.abc.complexus.RecordComplexus recordComplexus;
+global cho.carbon.rrc.record.FGRootRecord fgRootRecord;
+global  cho.carbon.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
+global cho.carbon.complexus.FGRecordComplexus recordComplexus;

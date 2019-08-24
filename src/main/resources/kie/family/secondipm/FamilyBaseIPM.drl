@@ -1,19 +1,22 @@
 package com.abc.rule.family.ipm
 
-import com.abc.rrc.record.Attribute;
-import com.abc.rrc.factory.DBAttributeFactory;
-import com.zhsq.biz.constant.CommonAlgorithm;
-import com.zhsq.biz.constant.family.FamilyItem;
-import com.abc.fuse.improve.attribute.FuseAttribute;
-import com.abc.model.enun.ValueType;
-import com.zhsq.biz.constant.EnumKeyValue;
-import com.abc.fuse.improve.attribute.label.FuseLabelAttribute;
-import com.abc.fuse.improve.attribute.leaf.FuseLeafAttribute;
-import com.abc.fuse.improve.attribute.FuseLeafAttrFactory;
-import com.abc.util.CodeManager;
-import com.abc.relation.RecordRelation;
-import com.zhsq.biz.constant.people.PeopleItem;
-import com.zhsq.biz.constant.RelationType;
+import cho.carbon.meta.enun.AttributeValueType;
+import cho.carbon.fuse.improve.attribute.FuseAttributeFactory;
+import cho.carbon.rrc.builder.FGRootRecordBuilder;
+import cho.carbon.fuse.improve.attribute.OpsAttribute;
+import cho.carbon.rrc.record.FGAttribute;
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.ops.builder.RecordRelationOpsBuilder;
+import cho.carbon.rrc.record.FGRootRecord;
+import cho.carbon.ops.builder.RecordRelationOpsBuilder;
+import cho.carbon.sysdate.SystemDateTimeManager;
+import cho.carbon.relation.RecordRelation;
+import cho.carbon.relation.RelationCorrelation;
+import cho.carbon.biz.constant.item.DXJDE2038Item;
+import cho.carbon.biz.constant.EnumKeyValue;
+import cho.carbon.biz.constant.RelationType;
+import cho.carbon.biz.algorithm.CommonAlgorithm;
+import cho.carbon.biz.common.CommonCalculation;
 
 global java.lang.String hostCode; 
 global java.lang.String hostType;
@@ -22,61 +25,37 @@ global java.lang.String userCode;
 global java.lang.String recordCode;
 global java.lang.String recordName;
 
+global java.util.List recordRelationOpsBuilderNew;
+global java.util.List rootRecordList;
 global java.util.List attributeList;
-global java.util.List addedLabelList;
-global java.util.List removedLabelList;
-global java.util.List addedLabelList;
 global java.util.List addedLeafAttrList;
 global java.util.Map removedLeafAttrMap;
-global com.abc.rrc.record.RootRecord rootRecord;
-global  com.abc.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
-global com.abc.complexus.RecordComplexus recordComplexus;
-
-rule "设置户籍家庭人口数为0"
-	salience 10 
-when
-	FuseAttribute( name==FamilyItem.家庭分类,getValue(ValueType.INT)==EnumKeyValue.ENUM_家庭分类_户籍家庭 )
- 	(not RecordRelation(type==RelationType.RR_家庭信息_户主_人口信息))  &&( not RecordRelation(type==RelationType.RR_家庭信息_成员_人口信息))
-then 
-	//设置户籍家庭人口数量
-	Attribute attr=DBAttributeFactory.newInstance(FamilyItem.家庭总人数, 0);
-	attributeList.add(attr);
-end
+global cho.carbon.rrc.record.FGRootRecord fgRootRecord;
+global  cho.carbon.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
+global cho.carbon.complexus.FGRecordComplexus recordComplexus;
 
 rule "设置户籍家庭人口数"
 	salience 10 
 when
-	FuseAttribute( name==FamilyItem.家庭分类,getValue(ValueType.INT)==EnumKeyValue.ENUM_家庭分类_户籍家庭 )
- 	exists RecordRelation(type==RelationType.RR_家庭信息_户主_人口信息)  or exists RecordRelation(type==RelationType.RR_家庭信息_成员_人口信息);
-then 
+	FuseAttribute(name==DXJDE2038Item.基本信息_家庭分类, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)), (Integer)getValue(AttributeValueType.INT) == EnumKeyValue.ENUM_家庭分类_户籍家庭);
+then
+	//户主数量和成员数量
 	Integer hzCount = CommonAlgorithm.getAppointRecordRelationCount(recordComplexus, recordName, recordCode, RelationType.RR_家庭信息_户主_人口信息);
 	Integer cyCount = CommonAlgorithm.getAppointRecordRelationCount(recordComplexus, recordName, recordCode, RelationType.RR_家庭信息_成员_人口信息);
 
 	//设置户籍家庭人口数量
-	Attribute attr=DBAttributeFactory.newInstance(FamilyItem.家庭总人数, hzCount + cyCount);
-	attributeList.add(attr);
-end
-
-rule "设置居住家庭人口数为0"
-	salience 10 
-when
-	FuseAttribute( name==FamilyItem.家庭分类,getValue(ValueType.INT)==EnumKeyValue.ENUM_家庭分类_居住家庭 )
- 	 not RecordRelation(type==RelationType.RR_家庭信息_居住成员_人口信息) 
-then 
-	//设置居住家庭人口数量
-	Attribute attr=DBAttributeFactory.newInstance(FamilyItem.家庭总人数, 0);
-	attributeList.add(attr);
+	FGAttribute peopleCount=FuseAttributeFactory.buildAttribute(DXJDE2038Item.基本信息_家庭人口数, hzCount+cyCount);
+	attributeList.add(peopleCount);
 end
 
 rule "设置居住家庭人口数"
 	salience 10 
 when
-	FuseAttribute( name==FamilyItem.家庭分类,getValue(ValueType.INT)==EnumKeyValue.ENUM_家庭分类_居住家庭 )
- 	 exists RecordRelation(type==RelationType.RR_家庭信息_居住成员_人口信息) 
+	FuseAttribute(name==DXJDE2038Item.基本信息_家庭分类, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)), (Integer)getValue(AttributeValueType.INT) == EnumKeyValue.ENUM_家庭分类_居住家庭);
 then 
-	Integer cyCount = CommonAlgorithm.getAppointRecordRelationCount(recordComplexus, recordName, recordCode, RelationType.RR_家庭信息_居住成员_人口信息);
+	//居住成员数量
+	Integer jzCount = CommonAlgorithm.getAppointRecordRelationCount(recordComplexus, recordName, recordCode, RelationType.RR_家庭信息_居住成员_人口信息);
 	//设置居住家庭人口数量
-	Attribute attr=DBAttributeFactory.newInstance(FamilyItem.家庭总人数, cyCount);
-	attributeList.add(attr);
+	FGAttribute peopleCount=FuseAttributeFactory.buildAttribute(DXJDE2038Item.基本信息_家庭人口数, jzCount);
+	attributeList.add(peopleCount);
 end
-

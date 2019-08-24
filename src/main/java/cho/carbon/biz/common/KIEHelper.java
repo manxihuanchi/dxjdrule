@@ -16,6 +16,7 @@ import cho.carbon.fuse.improve.attribute.FuseAttribute;
 import cho.carbon.fuse.improve.attribute.leaf.FuseLeafAttribute;
 import cho.carbon.fuse.improve.ops.builder.FuseFGRecordOpsBuilder;
 import cho.carbon.fuse.improve.transfer.BizzAttributeTransfer;
+import cho.carbon.meta.criteria.model.ModelConJunction;
 import cho.carbon.meta.criteria.model.ModelCriterion;
 import cho.carbon.ops.builder.RecordRelationOpsBuilder;
 import cho.carbon.ops.complexus.OpsComplexus;
@@ -64,9 +65,15 @@ public class KIEHelper {
 		logger.debug("本次触发规则数量 =  " + fireAllRules);
 		logger.debug("规则执行完毕===================== ");
 		
-		Collection<ModelCriterion> criterions = conJunctionFactory.getJunction().getCriterions();
 		
 		kSession.destroy();
+		
+		ModelConJunction junction = conJunctionFactory.getJunction();
+		Collection<ModelCriterion> criterions = null;
+		if (junction !=null) {
+			criterions = junction.getCriterions();
+		}
+		
 		return criterions;
 	}
 

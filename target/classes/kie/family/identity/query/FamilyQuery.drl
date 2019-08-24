@@ -1,30 +1,24 @@
 package com.abc.rule.family.identity.query
 
-import com.abc.rrc.query.criteria.CommonSymbol;
-import com.zhsq.biz.constant.EnumKeyValue;
-import com.zhsq.biz.common.CommonCalculation;
-import com.abc.fuse.improve.attribute.FuseAttribute;
-import com.abc.model.enun.ValueType;
-import com.abc.rrc.record.Attribute;
-import com.zhsq.biz.constant.family.FamilyItem;
+import cho.carbon.biz.constant.item.DXJDE2038Item;
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.query.model.FGConJunctionFactory;
+import cho.carbon.meta.enun.AttributeValueType;
+import cho.carbon.meta.enun.operator.UnaryOperator;
+import cho.carbon.biz.common.CommonCalculation;
+import cho.carbon.biz.constant.EnumKeyValue;
 
 global java.lang.String recordName;
-global com.abc.rrc.query.criteria.BizzCriteriaFactory bizzCriteriaFactory;
+global cho.carbon.query.model.FGConJunctionFactory conJunctionFactory;
 
-rule "户籍地址 criteria" 
+rule "家庭分类 and 家庭地址 criteria" 
 	salience 9  
 when
-	FuseAttribute(name == FamilyItem.家庭分类, getValue(ValueType.INT) == EnumKeyValue.ENUM_家庭分类_户籍家庭)
-    $nameFB:FuseAttribute(name==FamilyItem.户籍地址,CommonCalculation.isBasicLawful(getValue(ValueType.STRING)));
-then 
-	bizzCriteriaFactory.addCriteria($nameFB.getAttribute(), CommonSymbol.EQUAL);
+    $familyType:FuseAttribute(name==DXJDE2038Item.基本信息_家庭分类, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)));
+	$familyAddre: FuseAttribute( name== DXJDE2038Item.基本信息_家庭地址, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)))
+then
+	conJunctionFactory.getGroupFactory().addCommon($familyType.getAttribute().getName(), $familyType.getAttribute().getValueStr(), UnaryOperator.EQUAL);
+	conJunctionFactory.getGroupFactory().addCommon($familyAddre.getAttribute().getName(), $familyAddre.getAttribute().getValueStr(), UnaryOperator.EQUAL);
 end
 
-rule "居住地址 criteria" 
-	salience 9  
-when
-	FuseAttribute(name == FamilyItem.家庭分类, getValue(ValueType.INT) == EnumKeyValue.ENUM_家庭分类_居住家庭)
-    $nameFB:FuseAttribute(name==FamilyItem.居住地址,CommonCalculation.isBasicLawful(getValue(ValueType.STRING)));
-then 
-	bizzCriteriaFactory.addCriteria((Attribute)$nameFB.getAttribute(), CommonSymbol.EQUAL);
-end
+
