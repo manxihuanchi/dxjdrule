@@ -18,7 +18,8 @@ import cho.carbon.biz.constant.EnumKeyValue;
 import cho.carbon.biz.constant.RelationType;
 import cho.carbon.biz.common.CommonCalculation;
 import cho.carbon.biz.constant.item.DXJDE2038Item;
-
+import cho.carbon.util.CodeManager;
+import cho.carbon.biz.algorithm.CommonAlgorithm;
 
 global java.lang.String hostCode; 
 global java.lang.String hostType;
@@ -44,54 +45,19 @@ then
 	removedLeafAttrMap.put($fa.getLeafCode(), $fa.getName());
 end 
 
-
 rule "户籍家庭没有户主"
 	salience 6
 when
-	$value: FuseAttribute( name==DXJDE2038Item.基本信息_家庭分类, CommonCalculation.isBasicLawful(getValue(AttributeValueType.STRING)), (Integer)getValue(AttributeValueType.INT)==EnumKeyValue.ENUM_家庭分类_户籍家庭)
- 	not RecordRelation(type == RelationType.RR_家庭信息_户主_人口信息);
+	FuseAttribute( name==DXJDE2038Item.基本信息_家庭分类, CommonCalculation.isBasicLawful(getValue(AttributeValueType.STRING)), (Integer)getValue(AttributeValueType.INT)==EnumKeyValue.ENUM_家庭分类_户籍家庭)
 then 
-	String code = CodeManager.newCode32();
-	FuseLeafAttribute leafAttr = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2038Item.家庭信息_错误信息, code, DXJDE2038Item.错误信息_错误类型, EnumKeyValue.ENUM_家庭信息错误_户主数量错误);
-	addedLeafAttrList.add(leafAttr);
-	FuseLeafAttribute leafAttr2 = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2038Item.家庭信息_错误信息, code, DXJDE2038Item.错误信息_描述, "家庭没有户主");
-	addedLeafAttrList.add(leafAttr2);
+	//户主数量
+	Integer hzCount = CommonAlgorithm.getAppointRecordRelationCount(recordComplexus, recordName, recordCode, RelationType.RR_家庭信息_户主_人口信息);
+	if(hzCount != 1) {
+		String code = CodeManager.newCode32();
+		FuseLeafAttribute leafAttr = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2038Item.家庭信息_错误信息, code, DXJDE2038Item.错误信息_错误类型, EnumKeyValue.ENUM_家庭信息错误_户主数量错误);
+		addedLeafAttrList.add(leafAttr);
+		FuseLeafAttribute leafAttr2 = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2038Item.家庭信息_错误信息, code, DXJDE2038Item.错误信息_描述, "家庭户主数量非一");
+		addedLeafAttrList.add(leafAttr2);
+	}
 end
 
-/*
-
-	
-
-rule "家庭有户主但是和户主关系不是户主"
-	salience 6
-when
-	FuseAttribute( name==FamilyItem.家庭分类, getValue(ValueType.INT)==EnumKeyValue.ENUM_家庭分类_户籍家庭)
-	$value :FuseAttribute( name==FamilyItem.户籍地址 )
- 	 RecordRelation(type == RelationType.RR_家庭信息_户主_人口信息, $huzCode:right);
- 	 eval(recordComplexus.getRootRecord($huzCode) != null)
- 	 eval( recordComplexus.getRootRecord($huzCode).findAttribute(PeopleItem.和户主关系) !=null)
- 	 eval(!String.valueOf(EnumKeyValue.ENUM_和户主关系_户主).equals(String.valueOf(recordComplexus.getRootRecord($huzCode).findAttribute(PeopleItem.和户主关系).getValue(ValueType.STRING))) )
-then 
-	String code = CodeManager.newCode32();
-	FuseLeafAttribute leafAttr = FuseLeafAttrFactory.newInstance($value.getCode(), FamilyItem.家庭错误信息, code, FamilyItem.家庭错误信息_错误类型, EnumKeyValue.ENUM_错误类型_家庭信息错误);
-	addedLeafAttrList.add(leafAttr);
-	FuseLeafAttribute leafAttr2 = FuseLeafAttrFactory.newInstance($value.getCode(), FamilyItem.家庭错误信息, code, FamilyItem.家庭错误信息_描述, "家庭有户主但是和户主关系不是户主");
-	addedLeafAttrList.add(leafAttr2);
-end
-
-rule "家庭中户主大于一个"
-	salience 6
-when
-	FuseAttribute( name==FamilyItem.家庭分类, getValue(ValueType.INT)==EnumKeyValue.ENUM_家庭分类_户籍家庭)
-	$value :FuseAttribute( name==FamilyItem.户籍地址 )
- 	RecordRelation(type == RelationType.RR_家庭信息_户主_人口信息, $left:left);
- 	eval(DataIntrospection.getHzCount(recordComplexus, recordName, $left)>1 )
-then 
-	String code = CodeManager.newCode32();
-	FuseLeafAttribute leafAttr = FuseLeafAttrFactory.newInstance($value.getCode(), FamilyItem.家庭错误信息, code, FamilyItem.家庭错误信息_错误类型, EnumKeyValue.ENUM_错误类型_家庭信息错误);
-	addedLeafAttrList.add(leafAttr);
-	FuseLeafAttribute leafAttr2 = FuseLeafAttrFactory.newInstance($value.getCode(), FamilyItem.家庭错误信息, code, FamilyItem.家庭错误信息_描述, "家庭中户主大于一个");
-	addedLeafAttrList.add(leafAttr2);
-end
-
-*/
