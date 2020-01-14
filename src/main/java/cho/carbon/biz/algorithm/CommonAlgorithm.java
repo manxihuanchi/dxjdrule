@@ -23,7 +23,7 @@ public class CommonAlgorithm {
 	 * @param relationType   指定的关系类型       type==RelationType.RR_人口信息_走访记录_走访记录
 	 * @return 
 	 */
-	public static Integer getAppointRecordRelationCount(RecordComplexus recordComplexus,String recordName, String recordCode, String relationType) {
+	public static Integer getAppointRecordRelationCount(RecordComplexus recordComplexus,String recordName, String recordCode, Long relationType) {
 		Integer count = 0;
 		RelationCorrelation	relationCorrelation = CommonAlgorithm.getRelationCorrelation(recordComplexus, recordName, recordCode);
 		if (relationCorrelation != null) {
@@ -76,13 +76,6 @@ public class CommonAlgorithm {
 		RelationCorrelation relationCorrelation = recordComplexus.getRelationCorrelation(recordCode);
 		return relationCorrelation;
 	}
-	
-//	public static RelationCorrelation getRe(RecordComplexus recordComplexus,String recordName, String recordCode) {
-//		System.out.println();
-//		RelationCorrelation relationCorrelation = CommonAlgorithm.getRelationCorrelation(recordComplexus, recordName, recordCode);
-//		RelationCorrelation relationCorrelation2 = CommonAlgorithm.getRelationCorrelation(recordComplexus, recordName, "5f947aefebfc429e9a6336252f49d27c");
-//		return relationCorrelation2;
-//	}
 	
 	/**
 	 * 根据  recordCode 获取本实例  指定属性的值

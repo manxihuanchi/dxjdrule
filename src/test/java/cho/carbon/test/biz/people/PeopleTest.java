@@ -1,7 +1,8 @@
 package cho.carbon.test.biz.people;
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,7 +20,7 @@ import cho.carbon.panel.PanelFactory;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class PeopleTest {
 	
-	private static Logger logger = Logger.getLogger(PeopleTest.class);
+	Logger logger = LoggerFactory.getLogger(PeopleTest.class);
 	protected String mapperName = "人口信息";
 	
 	
@@ -42,7 +43,7 @@ public class PeopleTest {
 			logger.debug("融合后实体： " + code + " : "+ result.toJson());
 			
 			long endTime = System.currentTimeMillis();// 记录结束时间
-			logger.debug((float) (endTime - startTime) / 1000);
+			logger.debug(( (endTime - startTime) / 1000 ) + "");
 	}
 	
 	private Entity createEntity(String mappingName) {

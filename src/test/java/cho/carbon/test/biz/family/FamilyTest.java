@@ -1,8 +1,9 @@
 package cho.carbon.test.biz.family;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,7 +21,7 @@ import cho.carbon.panel.PanelFactory;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class FamilyTest {
 	
-	private static Logger logger = Logger.getLogger(FamilyTest.class);
+	Logger logger = LoggerFactory.getLogger(FamilyTest.class);
 	protected String mapperName = "家庭信息";
 	
 	
@@ -43,7 +44,7 @@ public class FamilyTest {
 			logger.debug("融合后实体： " + code + " : "+ result.toJson());
 			
 			long endTime = System.currentTimeMillis();// 记录结束时间
-			logger.debug((float) (endTime - startTime) / 1000);
+			logger.debug( ((endTime - startTime) / 1000) + "");
 	}
 	
 	private Entity createEntity(String mappingName) {
@@ -51,7 +52,7 @@ public class FamilyTest {
 		Entity entity = new Entity(mappingName);
 		//entity.putValue("唯一编码", "8050e272022a462b984c32b9b20465cf");
 		entity.putValue("家庭分类", EnumKeyValue.ENUM_家庭分类_户籍家庭); 
-		entity.putValue("家庭地址", "杭州市西湖区6009号");
+		entity.putValue("家庭地址", "杭州市西湖区6010号");
 		
 //		Entity relationentity = new Entity("户籍成员");
 //		//relationentity.putValue("唯一编码", "687fafa97c0f491aaa3dd86e94220618");

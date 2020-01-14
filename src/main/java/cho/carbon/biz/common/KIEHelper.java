@@ -7,8 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cho.carbon.complexus.FGRecordComplexus;
 import cho.carbon.context.fg.FuncGroupContext;
@@ -34,7 +35,7 @@ import cho.carbon.rrc.record.FGRootRecord;
 
 public class KIEHelper {
 
-	private static Logger logger = Logger.getLogger(KIEHelper.class);
+	static Logger logger = LoggerFactory.getLogger(KIEHelper.class);
 
 	public static Collection<ModelCriterion> getBizCriteriaListFromKIE(String recordCode, FGRecordComplexus complexus,
 			KieSession kSession) {

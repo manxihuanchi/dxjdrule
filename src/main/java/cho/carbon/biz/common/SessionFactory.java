@@ -1,25 +1,24 @@
 package cho.carbon.biz.common;
 
-import org.apache.log4j.Logger;
 import org.kie.api.KieServices;
+import org.kie.api.KieServices.Factory;
 import org.kie.api.event.rule.AfterMatchFiredEvent;
 import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.event.rule.AgendaGroupPoppedEvent;
 import org.kie.api.event.rule.AgendaGroupPushedEvent;
 import org.kie.api.event.rule.BeforeMatchFiredEvent;
-import org.kie.api.event.rule.DebugAgendaEventListener;
-import org.kie.api.event.rule.DefaultAgendaEventListener;
 import org.kie.api.event.rule.MatchCancelledEvent;
 import org.kie.api.event.rule.MatchCreatedEvent;
 import org.kie.api.event.rule.RuleFlowGroupActivatedEvent;
 import org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.KieServices.Factory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class SessionFactory {
-	private static Logger logger = Logger.getLogger(SessionFactory.class);
+	private static Logger logger = LoggerFactory.getLogger(SessionFactory.class);
 	
 	//findKeepSession
 	public static KieSession findScannerSession(String sessionName) {

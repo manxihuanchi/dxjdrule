@@ -1,6 +1,5 @@
 package cho.carbon.biz.algorithm.people;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +40,7 @@ public class BirthdayAlgorithm {
 			}else if (age>=90) {
 				return EnumKeyValue.ENUM_几岁老人_90_99岁老人;
 			} else if (age>=80) {
-				return EnumKeyValue.ENUM_几岁老人_80_89岁老人;
+				return EnumKeyValue.ENUM_几岁老人_80_99岁老人;
 			} else if (age>=70) {
 				return EnumKeyValue.ENUM_几岁老人_70_79岁老人;
 			} else if (age>=60) {
