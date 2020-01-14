@@ -4,9 +4,8 @@ import cho.carbon.biz.bnb.PeopleFG;
 import cho.carbon.biz.common.KIEHelper;
 import cho.carbon.biz.common.SessionFactory;
 import cho.carbon.complexus.FGRecordComplexus;
-import cho.carbon.fuse.fg.FGFusionContext;
-import cho.carbon.fuse.fg.ImproveResult;
-import cho.carbon.hc.HCFusionContext;
+import cho.carbon.context.fg.FuncGroupContext;
+import cho.carbon.fuse.fg.ImproveFGResult;
 import cho.carbon.ops.complexus.OpsComplexus;
 
 
@@ -22,35 +21,39 @@ public class PeopleFGTimer extends PeopleFG {
 		return true;
 	}
 	
-	
 	@Override
-	public ImproveResult preImprove(FGFusionContext context, String recordCode, OpsComplexus opsComplexus,
+	public ImproveFGResult preImprove(FuncGroupContext context, String recordCode, OpsComplexus opsComplexus,
 			FGRecordComplexus recordComplexus) {
+
 		return null;
 	}
 	
 	@Override
-	public ImproveResult improve(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-ipm-ipmTimer"));
-	} 
-	
+	public ImproveFGResult improve(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2020-f2-imptimer"));
+	}
 	
 	@Override
-	public boolean afterFusition(String recordCode, HCFusionContext context) {
+	public boolean afterFusition(FuncGroupContext context, String recordCode) {
 		return false;
 	}
 	
 	@Override
-	public ImproveResult postImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
+	public ImproveFGResult postImprove(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
 
 	@Override
-	public ImproveResult secondImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-people-secondipm-secondipmTimer"));
+	public ImproveFGResult secondImprove(FuncGroupContext context, String recordCode,
+			FGRecordComplexus recordComplexus) {
+		
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2020-imp-second"));
 	}
+	
 	
 }

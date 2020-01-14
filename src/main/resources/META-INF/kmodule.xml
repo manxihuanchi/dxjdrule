@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://www.drools.org/xsd/kmodule">
-	
-	<!-- people start-->
-	<kbase name="peopleidtquery" packages="kie.people.identity.query">
-		<ksession name="ks-people-idt-query" />
-	</kbase>
-	<kbase name="peopleipmtimer" packages="kie.people.ipm.ipmTimer">
-		<ksession name="ks-people-ipm-ipmTimer" />
-	</kbase>
-	<kbase name="peoplepreipm" packages="kie.people.preipm">
-		<ksession name="ks-people-preipm" />
-	</kbase>
-	<kbase name="peopleipm" packages="kie.people.ipm, kie.people.ipm.ipmTimer">
-		<ksession name="ks-people-ipm" />
-	</kbase>
-	<kbase name="peoplePostIMP" packages="kie.people.postimp">
-		<ksession name="ks-people-postimp" />
-	</kbase>
-	
-	<kbase name="peopleSecondIPM" packages="kie.people.secondipm, kie.people.secondipm.secondipmTimer">
-		<ksession name="ks-people-secondipm" />
-	</kbase>
-	<kbase name="peopleSecondIPMTimer" packages="kie.people.secondipm.secondipmTimer">
-		<ksession name="ks-people-secondipm-secondipmTimer" />
-	</kbase>
-	
-	<kbase name="peoplethirdIPM" packages="kie.people.thirdIPM">
-		<ksession name="ks-people-thirdIPM" />
-	</kbase>
-	
-	<!-- people end-->
-	
-	<!-- family start-->
-	<kbase name="familyidtquery" packages="kie.family.identity.query">
-		<ksession name="ks-family-idt-query" />
-	</kbase>
-	<kbase name="familypreipm" packages="kie.family.preipm">
-		<ksession name="ks-family-preipm" />
-	</kbase>
-	<kbase name="familyipm" packages="kie.family.ipm, kie.family.ipm.ipmTimer">
-		<ksession name="ks-family-ipm" />
-	</kbase>
-	<kbase name="familypostimp" packages="kie.family.postimp">
-		<ksession name="ks-family-postimp" />
-	</kbase>
-	<kbase name="familysecondipm" packages="kie.family.secondipm">
-		<ksession name="ks-family-secondipm" />
-	</kbase>
-	<kbase name="familythirdIPM" packages="kie.family.thirdIPM">
-		<ksession name="ks-family-thirdIPM" />
-	</kbase>
-	<!-- family end-->
-	
+<!-- 人口信息PeopoleDXJDE2020 start -->
+<kbase name="peopoledxjde2020-identity-query" packages="kie.peopoledxjde2020.identity.query">
+ <ksession name="ks-dxjde2020-identity-query" />
+ </kbase>
+<kbase name="peopoledxjde2020-imp-fetch" packages="kie.peopoledxjde2020.imp-fetch">
+ <ksession name="ks-dxjde2020-imp-fetch" />
+ </kbase>
+<kbase name="peopoledxjde2020-f1-pre" packages="kie.peopoledxjde2020.imp-first.f1-pre">
+ <ksession name="ks-dxjde2020-f1-pre" />
+ </kbase>
+ 
+ <kbase name="peopoledxjde2020-f2-imptimer" packages="kie.peopoledxjde2020.imp-first.f2-imp.ipmTimer">
+ <ksession name="ks-dxjde2020-f2-imptimer" />
+ </kbase>
+<kbase name="peopoledxjde2020-f2-imp" packages="kie.peopoledxjde2020.imp-first.f2-imp, kie.peopoledxjde2020.imp-first.f2-imp.ipmTimer">
+ <ksession name="ks-dxjde2020-f2-imp" />
+ </kbase>
+<kbase name="peopoledxjde2020-f3-post" packages="kie.peopoledxjde2020.imp-first.f3-post">
+ <ksession name="ks-dxjde2020-f3-post" />
+ </kbase>
+<kbase name="peopoledxjde2020-imp-second" packages="kie.peopoledxjde2020.imp-second">
+ <ksession name="ks-dxjde2020-imp-second" />
+ </kbase>
+<kbase name="peopoledxjde2020-imp-third" packages="kie.peopoledxjde2020.imp-third">
+ <ksession name="ks-dxjde2020-imp-third" />
+ </kbase>
+<kbase name="peopoledxjde2020-query-conjunction" packages="kie.peopoledxjde2020.query.conjunction">
+ <ksession name="ks-dxjde2020-query-conjunction" />
+ </kbase>
+<!-- 人口信息PeopoleDXJDE2020 end -->
+<!-- 家庭信息DXJDE2038 start -->
+<kbase name="dxjde2038-identity-query" packages="kie.dxjde2038.identity.query">
+ <ksession name="ks-dxjde2038-identity-query" />
+ </kbase>
+<kbase name="dxjde2038-imp-fetch" packages="kie.dxjde2038.imp-fetch">
+ <ksession name="ks-dxjde2038-imp-fetch" />
+ </kbase>
+<kbase name="dxjde2038-f1-pre" packages="kie.dxjde2038.imp-first.f1-pre">
+ <ksession name="ks-dxjde2038-f1-pre" />
+ </kbase>
+<kbase name="dxjde2038-f2-imp" packages="kie.dxjde2038.imp-first.f2-imp">
+ <ksession name="ks-dxjde2038-f2-imp" />
+ </kbase>
+<kbase name="dxjde2038-f3-post" packages="kie.dxjde2038.imp-first.f3-post">
+ <ksession name="ks-dxjde2038-f3-post" />
+ </kbase>
+<kbase name="dxjde2038-imp-second" packages="kie.dxjde2038.imp-second">
+ <ksession name="ks-dxjde2038-imp-second" />
+ </kbase>
+<kbase name="dxjde2038-imp-third" packages="kie.dxjde2038.imp-third">
+ <ksession name="ks-dxjde2038-imp-third" />
+ </kbase>
+<kbase name="dxjde2038-query-conjunction" packages="kie.dxjde2038.query.conjunction">
+ <ksession name="ks-dxjde2038-query-conjunction" />
+ </kbase>
+<!-- 家庭信息DXJDE2038 end -->
 </kmodule>

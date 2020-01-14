@@ -1,0 +1,58 @@
+package cho.carbon.biz.rule.peopoledxjde2020.imp
+
+import cho.carbon.relation.RelationCorrelation;
+import cho.carbon.fuse.improve.attribute.FuseAttributeFactory;
+import cho.carbon.rrc.record.FGAttribute;
+import cho.carbon.meta.enun.AttributeValueType;
+import cho.carbon.relation.RecordRelation;
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.fuse.improve.attribute.OpsAttribute;
+import cho.carbon.fuse.improve.attribute.leaf.OpsLeafAttribute;
+import cho.carbon.biz.constant.EnumKeyValue;
+import cho.carbon.biz.common.CommonCalculation;
+import cho.carbon.message.MessageFactory;
+import cho.carbon.biz.constant.item.DXJDE2020Item;
+import cho.carbon.fuse.improve.attribute.leaf.FuseLeafAttribute;
+import cho.carbon.biz.algorithm.people.IDIntrospection;
+import cho.carbon.model.uid.UidManager;
+
+
+global java.lang.String hostCode; 
+global java.lang.String hostType;
+
+global java.lang.String userCode;
+global java.lang.String recordCode;
+global java.lang.String recordName;
+
+global java.util.List recordRelationOpsBuilderNew;
+global java.util.List rootRecordList;
+global java.util.List attributeList;
+global java.util.List addedLeafAttrList;
+global java.util.List messageList;
+global java.util.Map removedLeafAttrMap;
+global cho.carbon.rrc.record.FGRootRecord fgRootRecord;
+global cho.carbon.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
+global cho.carbon.complexus.FGRecordComplexus recordComplexus;
+
+
+//下面识别身份证号错误信息
+rule "清空人口错误"
+	salience 7
+when
+   $fa: FuseLeafAttribute(name==DXJDE2020Item.人口错误_错误类型);
+then  
+	removedLeafAttrMap.put($fa.getLeafCode(), $fa.getName());
+end 
+
+rule "身份证校验错误"
+	salience 6
+when
+   $IdFB: FuseAttribute( name==DXJDE2020Item.人口信息_身份证号码, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)))
+    eval(!IDIntrospection.inspectId((String)$IdFB.getValue(AttributeValueType.STRING)));
+then 
+	String code = UidManager.getUID(DXJDE2020Item.人口信息_人口错误);
+	FuseLeafAttribute leafAttr = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2020Item.人口信息_人口错误, code, DXJDE2020Item.人口错误_错误类型, EnumKeyValue.ENUM_人口错误信息_身份证号错误);
+	addedLeafAttrList.add(leafAttr);
+	FuseLeafAttribute leafAttr2 = FuseAttributeFactory.buildFuseLeafAttribute(recordCode, DXJDE2020Item.人口信息_人口错误, code, DXJDE2020Item.人口错误_描述, "身份证校验错误");
+	addedLeafAttrList.add(leafAttr2);
+end

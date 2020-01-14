@@ -1,0 +1,22 @@
+package cho.carbon.biz.rule.dxjde2038.identity.query
+
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.query.model.FGConJunctionFactory;
+import cho.carbon.meta.enun.AttributeValueType;
+import cho.carbon.meta.enun.operator.UnaryOperator;
+import cho.carbon.biz.common.CommonCalculation;
+import cho.carbon.biz.constant.item.DXJDE2038Item;
+
+global java.lang.String recordName;
+global cho.carbon.query.model.FGConJunctionFactory conJunctionFactory;
+
+
+rule "家庭分类 and 家庭地址 criteria" 
+	salience 9  
+when
+    $familyType:FuseAttribute(name==DXJDE2038Item.基本信息_家庭分类, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)));
+	$familyAddre: FuseAttribute( name== DXJDE2038Item.基本信息_家庭地址, CommonCalculation.isBasicLawful((String)getValue(AttributeValueType.STRING)))
+then
+	conJunctionFactory.getGroupFactory().addCommon($familyType.getAttribute().getName(), $familyType.getAttribute().getValueStr(), UnaryOperator.EQUAL);
+	conJunctionFactory.getGroupFactory().addCommon($familyAddre.getAttribute().getName(), $familyAddre.getAttribute().getValueStr(), UnaryOperator.EQUAL);
+end

@@ -1,0 +1,44 @@
+package cho.carbon.biz.rule.peopoledxjde2020.imp
+
+import cho.carbon.relation.RelationCorrelation;
+import cho.carbon.fuse.improve.attribute.FuseAttributeFactory;
+import cho.carbon.rrc.record.FGAttribute;
+import cho.carbon.meta.enun.AttributeValueType;
+import cho.carbon.relation.RecordRelation;
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.fuse.improve.attribute.OpsAttribute;
+import cho.carbon.fuse.improve.attribute.leaf.OpsLeafAttribute;
+import cho.carbon.biz.constant.EnumKeyValue;
+import cho.carbon.biz.common.CommonCalculation;
+import cho.carbon.message.MessageFactory;
+import cho.carbon.biz.constant.item.DXJDE2020Item;
+import cho.carbon.fuse.improve.attribute.leaf.FuseLeafAttribute;
+
+
+global java.lang.String hostCode; 
+global java.lang.String hostType;
+
+global java.lang.String userCode;
+global java.lang.String recordCode;
+global java.lang.String recordName;
+
+global java.util.List recordRelationOpsBuilderNew;
+global java.util.List rootRecordList;
+global java.util.List attributeList;
+global java.util.List addedLeafAttrList;
+global java.util.List messageList;
+global java.util.Map removedLeafAttrMap;
+global cho.carbon.rrc.record.FGRootRecord fgRootRecord;
+global cho.carbon.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
+global cho.carbon.complexus.FGRecordComplexus recordComplexus;
+
+//只要残疾信息有值， 就执行， 不去判断是否之前有
+rule "残疾信息有值设置【身份类别】为残疾"
+	salience 10 
+when
+	exists FuseLeafAttribute(name==DXJDE2020Item.残疾信息_残疾类别)
+then 
+	// 多选枚举赋值
+	FGAttribute attr = FuseAttributeFactory.buildAttribute(DXJDE2020Item.基本信息_身份类别, EnumKeyValue.ENUM_身份类别_残疾人);
+	attributeList.add(attr);	
+end

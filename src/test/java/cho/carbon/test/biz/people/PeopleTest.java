@@ -6,9 +6,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cho.carbon.biz.timertask.people.PeopleTimeTask;
+import cho.carbon.context.core.FusionContext;
+import cho.carbon.context.hc.HCFusionContext;
 import cho.carbon.entity.entity.Entity;
-import cho.carbon.hc.FusionContext;
-import cho.carbon.hc.HCFusionContext;
 import cho.carbon.panel.Discoverer;
 import cho.carbon.panel.Integration;
 import cho.carbon.panel.IntegrationMsg;
@@ -48,8 +48,8 @@ public class PeopleTest {
 	private Entity createEntity(String mappingName) {
 		
 		Entity entity = new Entity(mappingName);
-		entity.putValue("唯一编码", "8050e272022a462b984c32b9b20465cf");
-		entity.putValue("姓名", "测试5"); 
+		//entity.putValue("唯一编码", "8050e272022a462b984c32b9b20465cf");
+		entity.putValue("姓名", "测试21"); 
 		//110101193903074918
 		//110101199003077598
 		entity.putValue("身份证号码", "110101193903074918");//110101199003077598

@@ -1,81 +1,93 @@
 package cho.carbon.biz.bnb;
 
 import java.util.Collection;
+
 import org.springframework.stereotype.Repository;
 
 import cho.carbon.biz.common.KIEHelper;
 import cho.carbon.biz.common.SessionFactory;
-import cho.carbon.callback.IFusitionCallBack;
 import cho.carbon.complexus.FGRecordComplexus;
-import cho.carbon.fuse.check.FuseCheckInfo;
-import cho.carbon.fuse.fg.FGFusionContext;
-import cho.carbon.fuse.fg.FunctionalGroup;
-import cho.carbon.fuse.fg.FuseCheck;
-import cho.carbon.fuse.fg.IdentityQuery;
-import cho.carbon.fuse.fg.ImproveResult;
-import cho.carbon.fuse.fg.OneRoundImprovement;
-import cho.carbon.fuse.fg.ThreeRoundImprovement;
-import cho.carbon.hc.HCFusionContext;
+import cho.carbon.context.fg.FuncGroupContext;
+import cho.carbon.fuse.fg.CheckFGResult;
+import cho.carbon.fuse.fg.CheckFuncGroup;
+import cho.carbon.fuse.fg.ConJunctionFGResult;
+import cho.carbon.fuse.fg.FetchFGResult;
+import cho.carbon.fuse.fg.FetchFuncGroup;
+import cho.carbon.fuse.fg.FunctionGroup;
+import cho.carbon.fuse.fg.FuseCallBackFuncGroup;
+import cho.carbon.fuse.fg.IdentityQueryFuncGroup;
+import cho.carbon.fuse.fg.ImproveFGResult;
+import cho.carbon.fuse.fg.QueryJunctionFuncGroup;
+import cho.carbon.fuse.fg.ThirdRoundImproveFuncGroup;
+import cho.carbon.meta.criteria.model.ModelConJunction;
 import cho.carbon.meta.criteria.model.ModelCriterion;
 import cho.carbon.ops.complexus.OpsComplexus;
+import cho.carbon.rrc.record.FGRootRecord;
 
 @Repository(value = "DXJDE2038")
-public class FamilyFG implements FuseCheck,FunctionalGroup, IdentityQuery,OneRoundImprovement, ThreeRoundImprovement, IFusitionCallBack {
-
-	
-	@Override
-	public Collection<ModelCriterion> getCriterions(String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getBizCriteriaListFromKIE(recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-family-idt-query"));
-	}
+public class FamilyFG implements FunctionGroup, IdentityQueryFuncGroup, CheckFuncGroup, ThirdRoundImproveFuncGroup,
+FuseCallBackFuncGroup, FetchFuncGroup,QueryJunctionFuncGroup {
 
 	@Override
-	public ImproveResult preImprove(FGFusionContext context, String recordCode, OpsComplexus opsComplexus,
+	public  ImproveFGResult preImprove(FuncGroupContext context, String recordCode, OpsComplexus opsComplexus,
 			FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, opsComplexus, recordComplexus,
-				SessionFactory.findScannerSession("ks-family-preipm"));
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, opsComplexus, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2038-f1-pre"));
 	}
 
 	@Override
-	public ImproveResult improve(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-family-ipm"));
-	} 
+	public ImproveFGResult improve(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2038-f2-imp"));
+
+	}
 
 	@Override
-	public boolean afterFusition(String recordCode, HCFusionContext context) {
+	public boolean afterFusition(FuncGroupContext context,String recordCode) {
 
 		return false;
 	}
 
 	@Override
-	public ImproveResult postImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-family-postimp"));
+	public ImproveFGResult postImprove(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2038-f3-post"));
 	}
 
 	@Override
-	public ImproveResult secondImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-family-secondipm"));
+	public ImproveFGResult secondImprove(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2038-imp-second"));
 	}
 
 	@Override
-	public ImproveResult thirdImprove(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		return KIEHelper.getImproveResultFromKIE(context, recordCode, recordComplexus,
-				SessionFactory.findScannerSession("ks-family-thirdIPM"));
+	public ImproveFGResult thirdImprove(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		return KIEHelper.getImproveFGResultFromKIE(context, recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2038-imp-third"));
 	}
 
 	@Override
-	public FuseCheckInfo afterCheck(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		// TODO Auto-generated method stub
+	public CheckFGResult afterCheck(FuncGroupContext context, String recordCode, FGRecordComplexus recordComplexus) {
+		
 		return null;
 	}
 
 	@Override
-	public FuseCheckInfo beforeCheck(FGFusionContext context, String recordCode, FGRecordComplexus recordComplexus) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<ModelCriterion> getCriterions(String recordCode, FGRecordComplexus recordComplexus) {
+		return KIEHelper.getBizCriteriaListFromKIE(recordCode, recordComplexus,
+				SessionFactory.findScannerSession("ks-dxjde2038-identity-query"));
 	}
-	
+
+	@Override
+	public FetchFGResult fetchImprove(FuncGroupContext context, FGRootRecord record) {
+		return KIEHelper.getFetchImproveResultFromKIE(context, record,
+				SessionFactory.findScannerSession("ks-dxjde2038-imp-fetch"));
+	}
+
+	@Override
+	public ConJunctionFGResult junctionImprove(FuncGroupContext context, ModelConJunction modelConJunction) {
+		return KIEHelper.getConJunctionImproveResultFromKIE(context, modelConJunction,
+				SessionFactory.findScannerSession("ks-dxjde2038-query-conjunction"));
+	}
+
 }

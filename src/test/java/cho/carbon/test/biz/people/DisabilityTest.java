@@ -9,10 +9,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cho.carbon.biz.constant.EnumKeyValue;
+import cho.carbon.context.core.FusionContext;
+import cho.carbon.context.hc.HCFusionContext;
 import cho.carbon.entity.entity.Entity;
 import cho.carbon.entity.entity.LeafEntity;
-import cho.carbon.hc.FusionContext;
-import cho.carbon.hc.HCFusionContext;
 import cho.carbon.panel.Discoverer;
 import cho.carbon.panel.Integration;
 import cho.carbon.panel.IntegrationMsg;
@@ -57,13 +57,14 @@ public class DisabilityTest {
 		
 		Entity entity = new Entity(mappingName);
 		//entity.putValue("唯一编码", "8050e272022a462b984c32b9b20465cf");
-		entity.putValue("姓名", "测试18"); 
+		entity.putValue("姓名", "测试194"); 
 		//110101193903074918
 		//110101199003077598
 		entity.putValue("身份证号码", "110101193903074918");//110101199003077598
 		Collection<Integer> coll = new ArrayList<Integer>();
 		coll.add(30703);
 		coll.add(30708);
+//		entity.putValue("身份类别", coll);
 		entity.putValue("身份类别", "30703,30708");
 		
 		

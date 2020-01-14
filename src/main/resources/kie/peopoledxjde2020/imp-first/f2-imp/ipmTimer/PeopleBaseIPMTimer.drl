@@ -1,0 +1,49 @@
+package com.abc.rule.people.ipm.ipmTimer
+
+import cho.carbon.biz.constant.item.DXJDE2020Item;
+import cho.carbon.fuse.improve.attribute.FuseAttribute;
+import cho.carbon.biz.algorithm.people.BirthdayAlgorithm;
+import cho.carbon.biz.common.CommonCalculation;
+import cho.carbon.fuse.improve.attribute.FuseAttributeFactory;
+import cho.carbon.rrc.record.FGAttribute;
+import cho.carbon.meta.enun.AttributeValueType;
+import java.util.Date;
+import cho.carbon.fuse.improve.attribute.OpsAttribute;
+import cho.carbon.biz.constant.EnumKeyValue;
+
+global java.lang.String hostCode; 
+global java.lang.String hostType;
+
+global java.lang.String userCode;
+global java.lang.String recordCode;
+global java.lang.String recordName;
+
+global java.util.List recordRelationOpsBuilderNew;
+global java.util.List rootRecordList;
+global java.util.List attributeList;
+global java.util.List addedLeafAttrList;
+global java.util.Map removedLeafAttrMap;
+global cho.carbon.rrc.record.FGRootRecord fgRootRecord;
+global  cho.carbon.ops.builder.RecordRelationOpsBuilder recordRelationOpsBuilder;
+global cho.carbon.complexus.FGRecordComplexus recordComplexus;
+
+rule "设置几岁老人"
+	salience 8
+when
+	FuseAttribute(name==DXJDE2020Item.基本信息_出生日期, $birthDay:getValue(AttributeValueType.TIMESTAMP),  CommonCalculation.isBasicLawful($birthDay));
+then 
+
+	// 获取老人枚举值
+	Integer oldAge = BirthdayAlgorithm.getOldLaber((Date)$birthDay);
+	FGAttribute oldAttr=FuseAttributeFactory.buildAttribute(DXJDE2020Item.基本信息_几岁老人, oldAge);
+	attributeList.add(oldAttr);
+	
+	// 设置老年人和移除老年人
+	if (oldAge != null) {
+		FGAttribute attr = FuseAttributeFactory.buildAttribute(DXJDE2020Item.基本信息_身份类别, EnumKeyValue.ENUM_身份类别_老年人);
+		attributeList.add(attr);
+	} else {
+		// 这里已移除身份类别为老年人
+		
+	}
+end

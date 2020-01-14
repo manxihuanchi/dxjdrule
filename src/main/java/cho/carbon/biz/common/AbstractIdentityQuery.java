@@ -2,10 +2,11 @@ package cho.carbon.biz.common;
 
 import java.util.List;
 
-import cho.carbon.fuse.fg.IdentityQuery;
+import cho.carbon.fuse.fg.IdentityQueryFuncGroup;
 
 
-public abstract class AbstractIdentityQuery  implements IdentityQuery{
+
+public abstract class AbstractIdentityQuery  implements IdentityQueryFuncGroup{
 
 	/*
 	 * public List<Criteria> getCriteriaList(String recordCode,RecordComplexus
